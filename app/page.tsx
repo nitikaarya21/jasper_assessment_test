@@ -1,14 +1,22 @@
 import ProductGridClient from '@/components/ProductGridClient'
 import { Product } from '@/components/ProductCard'
-import { products } from './api/products/products';
+import { headers } from "next/headers";
+
+async function getBaseUrl() {
+  const h = await headers();
+  const host = h.get("host");         
+  const protocol = h.get("x-forwarded-proto") ?? "http"; 
+
+  return `${protocol}://${host}`;
+}
+
 
 
 async function getProducts(): Promise<Product[]> {
-  return products;
-  // const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-  // const res = await fetch(`${baseUrl}/api/products`, { cache: 'no-store' })
-  // if (!res.ok) return []
-  // return res.json()
+  const baseUrl = await getBaseUrl(); 
+  const res = await fetch(`${baseUrl}/api/products`, { cache: 'no-store' })
+  if (!res.ok) return []
+  return res.json()
 }
 
 
