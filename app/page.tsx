@@ -1,12 +1,14 @@
 import ProductGridClient from '@/components/ProductGridClient'
 import { Product } from '@/components/ProductCard'
+import { products } from './api/products/products';
 
 
 async function getProducts(): Promise<Product[]> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-  const res = await fetch(`${baseUrl}/api/products`, { cache: 'no-store' })
-  if (!res.ok) return []
-  return res.json()
+  return products;
+  // const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  // const res = await fetch(`${baseUrl}/api/products`, { cache: 'no-store' })
+  // if (!res.ok) return []
+  // return res.json()
 }
 
 
